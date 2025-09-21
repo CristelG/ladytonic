@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Newsletter {
+  id        String   @id @default(cuid())
+  email     String
+  name      String
+  surname   String
+  createdAt DateTime @default(now())
+}
