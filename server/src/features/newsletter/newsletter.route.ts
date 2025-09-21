@@ -5,7 +5,7 @@ import { create, getAll } from "./newsletter.controller.js";
 //init router
 const newsletterRouter = Router();
 
-//root
+// /api
 newsletterRouter.post("/", create);
 newsletterRouter.get("/", getAll);
 

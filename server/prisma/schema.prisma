@@ -10,7 +10,7 @@ datasource db {
 
 model Newsletter {
   id        String   @id @default(cuid())
-  email     String
+  email     String   @unique
   name      String
   surname   String
   createdAt DateTime @default(now())
