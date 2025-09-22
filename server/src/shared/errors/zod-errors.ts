@@ -1,14 +1,18 @@
 import { AppError } from "./custom-errors.js";
 
 export class ZodErrors extends AppError {
-
-  constructor(message: string, status: number, errors: any) {
-    super(message, status, errors);
+  constructor(message: string, status: number, errors: any, originalError?: unknown) {
+    super(message, status, errors, originalError);
 
     this.name = "ZodError";
   }
 
   public static validation(err: any) {
-    return new ZodErrors("Validation failed", 422, JSON.parse(err.message));
+    return new ZodErrors(
+      "Validation failed",
+      422,
+      err.issues.map((issue: { code: any; message: any; }) => ({ code: issue.code, message: issue.message })),
+      err
+    );
   }
 }

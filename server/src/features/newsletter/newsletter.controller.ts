@@ -3,23 +3,24 @@ import {
   createNewsletterSubscriber,
   getAllNewsletterSubscribers,
 } from "./newsletter.service.js";
-import { subscriber } from "./newsletter.types.js";
+import { subscriber, type NewsletterSubscriber } from "./newsletter.types.js";
 import { ZodErrors } from "../../shared/errors/zod-errors.js";
 import { ZodError } from "zod";
 import { escapeHtml } from "../../shared/utils/utils.js";
 
-const sanitizeSubscriber = (req: Request) => {
+const sanitizeSubscriber = (validatedEntity: NewsletterSubscriber) => {
   return {
-    email: escapeHtml(req.body.email.trim().toLowerCase()),
-    name: escapeHtml(req.body.name.trim()),
-    surname: escapeHtml(req.body.surname.trim()),
+    email: escapeHtml(validatedEntity.email.trim().toLowerCase()),
+    name: escapeHtml(validatedEntity.name.trim()),
+    surname: escapeHtml(validatedEntity.surname.trim()),
   };
 };
 
 export const create = async (req: Request, res: Response) => {
   try {
-    const validatedSubscriber = subscriber.parse(sanitizeSubscriber(req));
-    const newSubscriber = await createNewsletterSubscriber(validatedSubscriber);
+    const validatedSubscriber = subscriber.parse(req.body);
+    const sanitized = sanitizeSubscriber(validatedSubscriber)
+    const newSubscriber = await createNewsletterSubscriber(sanitized);
     res.status(201).json({
       message: "User successfully created",
       newsletterSubscriber: {

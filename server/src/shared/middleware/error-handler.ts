@@ -1,7 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
+import type { AppError } from "../types/error.types.js";
 
 const middleware = (
-  err: Error,
+  err: AppError,
   req: Request,
   res: Response,
   next: NextFunction
@@ -9,11 +10,19 @@ const middleware = (
   const code = (err as any).status || 500;
   const type = err.message || "Something went wrong with the server";
   logErrors(err);
-  res.status(code).json({ type, error: err });
+  res
+    .status(code)
+    .json({
+      type,
+      status: err.status,
+      errors: err.errorCode,
+    });
 };
 
-const logErrors = (e: Error) => {
-  console.error(e.stack);
+const logErrors = (e: any) => {
+  if (e?.originalError) {
+    console.error(e.originalError);
+  }
 };
 
 export default middleware;

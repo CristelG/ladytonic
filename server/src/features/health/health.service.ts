@@ -28,7 +28,7 @@ export const healthCheck = async () => {
       timeElapsed: elapsed
     };
   } catch (err: any) {
-    if (err?.code) throw PrismaErrors.code(err.code);
+    if (err?.code) throw PrismaErrors.code(err);
     throw err;
   }
 };

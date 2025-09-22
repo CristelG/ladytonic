@@ -16,7 +16,7 @@ export const createNewsletterSubscriber = async (
     return newSubscriber;
   } catch (err: any) {
     if (err?.code) {
-      throw PrismaErrors.code(err.code);
+      throw PrismaErrors.code(err);
     }
     //default behaviour in case of no code
     throw err;
@@ -28,7 +28,7 @@ export const getAllNewsletterSubscribers = async () => {
     return await prisma.newsletter.findMany();
   } catch (err: any) {
     if (err?.code) {
-      throw PrismaErrors.code(err.code);
+      throw PrismaErrors.code(err);
     }
   }
 };
