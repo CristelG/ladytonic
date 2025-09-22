@@ -9,12 +9,11 @@
     // See also https://aka.ms/tsconfig/module
     "module": "ES2022",
     "target": "ESNExt",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "types": ["jest", "node"],
     // For nodejs:
-    // "lib": ["esnext"],
-    // "types": ["node"],
-    // and npm install -D @types/node
+    "lib": ["ES2022"],
 
     // Other Outputs
     "sourceMap": true,
@@ -41,5 +40,13 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "jest.config.*"
+  ]
 }
