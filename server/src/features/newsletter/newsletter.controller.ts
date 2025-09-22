@@ -18,7 +18,7 @@ const sanitizeSubscriber = (req: Request) => {
 
 export const create = async (req: Request, res: Response) => {
   try {
-    const validatedSubscriber = subscriber.parse(sanitizeSubscriber(req.body));
+    const validatedSubscriber = subscriber.parse(sanitizeSubscriber(req));
     const newSubscriber = await createNewsletterSubscriber(validatedSubscriber);
     res.status(201).json({
       message: "User successfully created",

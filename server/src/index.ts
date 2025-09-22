@@ -9,6 +9,7 @@ import { rateLimit } from "express-rate-limit";
 // import { rateLimit } from "express-slow-down";
 import morgan from "morgan";
 import helmet, { type HelmetOptions } from "helmet";
+import { envServerSchema } from "./shared/types/env.schema.js";
 
 //init dotenv
 dotenv.config();
@@ -24,7 +25,7 @@ app.use(
 );
 
 //define port for app
-const port = process.env.PORT || 3001;
+const port = envServerSchema.PORT || 3001;
 
 //json body parser
 app.use(express.json({ limit: "50kb" }));
