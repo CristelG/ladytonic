@@ -19,7 +19,7 @@ const app: Application = express();
 //logging
 app.use(
   morgan(
-    "METHOD:[:method] | URL:[:url] | HTTP-STATUS:[:status] | CONTENT-LENGTH:[:res[content-length]] | RESPONSE TIME (MS): [:response-time]"
+    "[:date[web]] - METHOD:[:method] | URL:[:url] | HTTP-STATUS:[:status] | CONTENT-LENGTH:[:res[content-length]] | RESPONSE TIME (MS): [:response-time]"
   )
 );
 
