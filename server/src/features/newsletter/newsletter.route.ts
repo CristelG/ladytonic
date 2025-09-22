@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { create, getAll } from "./newsletter.controller.js";
+import { create, getAll } from "./newsletter.controller";
 
 
 //init router

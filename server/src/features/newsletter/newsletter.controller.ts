@@ -2,11 +2,11 @@ import type { Response, Request } from "express";
 import {
   createNewsletterSubscriber,
   getAllNewsletterSubscribers,
-} from "./newsletter.service.js";
-import { subscriber, type NewsletterSubscriber } from "./newsletter.types.js";
-import { ZodErrors } from "../../shared/errors/zod-errors.js";
+} from "./newsletter.service";
+import { subscriber, type NewsletterSubscriber } from "./newsletter.types";
+import { ZodErrors } from "../../shared/errors/zod-errors";
 import { ZodError } from "zod";
-import { escapeHtml } from "../../shared/utils/utils.js";
+import { escapeHtml } from "../../shared/utils/utils";
 
 const sanitizeSubscriber = (validatedEntity: NewsletterSubscriber) => {
   return {

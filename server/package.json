@@ -1,14 +1,14 @@
 {
   "name": "ladytonic-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "test": "set NODE_OPTIONS=--experimental-vm-modules && jest",
     "test-init": "ts-jest config:init",
-    "dev": "npx tsx watch src/index.ts",
+    "dev": "npx tsx watch src/server.ts",
     "build": "npx tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/server.js"
   },
   "author": "Cristel Ganna",
   "license": "MIT",
@@ -23,6 +23,7 @@
     "express-slow-down": "^3.0.0",
     "helmet": "^8.1.0",
     "morgan": "^1.10.1",
+    "supertest": "^7.1.4",
     "zod": "^4.1.11"
   },
   "devDependencies": {
@@ -34,6 +35,7 @@
     "@types/jest": "^30.0.0",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.5.2",
+    "@types/supertest": "^6.0.3",
     "babel-jest": "^30.1.2",
     "eslint-plugin-jest": "^29.0.1",
     "jest": "^30.1.3",

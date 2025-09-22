@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import type { AppError } from "../types/error.types.js";
+import type { AppError } from "../types/error.types";
 
 const middleware = (
   err: AppError,

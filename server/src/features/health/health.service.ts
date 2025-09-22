@@ -1,11 +1,10 @@
-import { PrismaErrors } from "../../shared/errors/prisma-errors.js";
-import prisma from "../../shared/prisma/index.js";
+import { PrismaErrors } from "../../shared/errors/prisma-errors";
+import prisma from "../../shared/prisma/index";
 
 export const healthCheck = async () => {
   try {
     const startTime = Date.now();
     const query = await prisma.$queryRaw`SELECT 1`;
-    // await new Promise((resolve) => setTimeout(resolve, 6000));
     const elapsed = Date.now() - startTime;
     
     if (elapsed > 5000) {

@@ -1,6 +1,6 @@
-import { PrismaErrors } from "../../shared/errors/prisma-errors.js";
-import prisma from "../../shared/prisma/index.js";
-import type { NewsletterSubscriber } from "./newsletter.types.js";
+import { PrismaErrors } from "../../shared/errors/prisma-errors";
+import prisma from "../../shared/prisma/index";
+import type { NewsletterSubscriber } from "./newsletter.types";
 
 export const createNewsletterSubscriber = async (
   data: NewsletterSubscriber

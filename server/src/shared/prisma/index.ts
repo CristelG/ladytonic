@@ -1,5 +1,5 @@
-import { PrismaClient } from "../../../generated/prisma/index.js";
-import { envServerSchema } from "../types/env.schema.js";
+import { PrismaClient } from "../../../generated/prisma/index";
+import { envServerSchema } from "../types/env.schema";
 
 const prisma = new PrismaClient({
   datasources: {

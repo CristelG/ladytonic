@@ -1,15 +1,14 @@
 import express from "express";
 import type { Express, Request, Response, Application } from "express";
 import dotenv from "dotenv";
-import errorHandler from "./shared/middleware/error-handler.js";
-import routes from "./routes/index.js";
-import prisma from "./shared/prisma/index.js";
+import errorHandler from "./shared/middleware/error-handler";
+import routes from "./routes/index";
+import prisma from "./shared/prisma/index";
 import cors, { type CorsOptions } from "cors";
 import { rateLimit } from "express-rate-limit";
 // import { rateLimit } from "express-slow-down";
 import morgan from "morgan";
 import helmet, { type HelmetOptions } from "helmet";
-import { envServerSchema } from "./shared/types/env.schema.js";
 
 //init dotenv
 dotenv.config();
@@ -20,12 +19,9 @@ const app: Application = express();
 //logging
 app.use(
   morgan(
-    "METHOD:[:method] | URL:[:url] | STATUS:[:status] | CONTENT-LENGTH:[:res[content-length]] | RESPONSE TIME (MS): [:response-time]"
+    "METHOD:[:method] | URL:[:url] | HTTP-STATUS:[:status] | CONTENT-LENGTH:[:res[content-length]] | RESPONSE TIME (MS): [:response-time]"
   )
 );
-
-//define port for app
-const port = envServerSchema.PORT || 3001;
 
 //json body parser
 app.use(express.json({ limit: "50kb" }));
@@ -102,11 +98,5 @@ const gracefulShutdown = async () => {
 process.on("SIGINT", gracefulShutdown);
 process.on("SIGTERM", gracefulShutdown);
 
-//app run
-const server = app.listen(port, () => {
-  console.info(`Server is online on port ${port}`);
-});
 
-server.on("error", (error) => {
-  console.error("Server error:", error);
-});
+export default app;

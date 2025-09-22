@@ -1,3 +1,4 @@
+import { expect, test } from "@jest/globals";
 import { escapeHtml, htmlCharacters } from "./utils";
 
 test("escape html characters", () => {

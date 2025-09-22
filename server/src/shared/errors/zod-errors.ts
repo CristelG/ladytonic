@@ -1,4 +1,4 @@
-import { AppError } from "./custom-errors.js";
+import { AppError } from "./custom-errors";
 
 export class ZodErrors extends AppError {
   constructor(message: string, status: number, errors: any, originalError?: unknown) {
