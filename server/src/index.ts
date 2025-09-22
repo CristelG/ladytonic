@@ -8,8 +8,7 @@ import cors, { type CorsOptions } from "cors";
 import { rateLimit } from "express-rate-limit";
 // import { rateLimit } from "express-slow-down";
 import morgan from "morgan";
-
-
+import helmet, { type HelmetOptions } from "helmet";
 
 //init dotenv
 dotenv.config();
@@ -18,7 +17,11 @@ dotenv.config();
 const app: Application = express();
 
 //logging
-app.use(morgan("METHOD:[:method] | URL:[:url] | STATUS:[:status] | CONTENT-LENGTH:[:res[content-length]] | RESPONSE TIME (MS): [:response-time]"))
+app.use(
+  morgan(
+    "METHOD:[:method] | URL:[:url] | STATUS:[:status] | CONTENT-LENGTH:[:res[content-length]] | RESPONSE TIME (MS): [:response-time]"
+  )
+);
 
 //define port for app
 const port = process.env.PORT || 3001;
@@ -26,7 +29,18 @@ const port = process.env.PORT || 3001;
 //json body parser
 app.use(express.json({ limit: "50kb" }));
 
-//cors
+//headers safety
+const headersPolicies: HelmetOptions = {
+  xFrameOptions: { action: "deny" },
+  //xss-protection set to 0 by default = enabled
+  //x-content-type-options enabled to nosniff by default
+  referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+  strictTransportSecurity: { maxAge: 31536000 },
+};
+
+app.use(helmet(headersPolicies));
+
+//cors - always before rate limit
 const corsOptions: CorsOptions = {
   origin: ["http://localhost:5173"],
   methods: ["GET", "POST", "DELETE"],
@@ -45,7 +59,7 @@ const limiter = rateLimit({
   standardHeaders: true, // add the `RateLimit-*` headers to the response
   legacyHeaders: false, // remove the `X-RateLimit-*` headers from the response
   skipFailedRequests: false, //already like this by default, but just to be aware
-  skipSuccessfulRequests: true, //like above  
+  skipSuccessfulRequests: true, //like above
 });
 
 const authLimiter = rateLimit({
@@ -54,15 +68,14 @@ const authLimiter = rateLimit({
   standardHeaders: true, // add the `RateLimit-*` headers to the response
   legacyHeaders: false, // remove the `X-RateLimit-*` headers from the response
   skipFailedRequests: false, //already like this by default, but just to be aware
-  skipSuccessfulRequests: true, //like above  
+  skipSuccessfulRequests: true, //like above
 });
 
 //api limiter
 app.use("/api", limiter);
 
 //auth limiter
-app.use('/auth', authLimiter)
-
+app.use("/auth", authLimiter);
 
 //API endpoints
 app.use("/api", routes);
