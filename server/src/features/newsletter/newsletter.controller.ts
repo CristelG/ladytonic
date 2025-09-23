@@ -7,6 +7,7 @@ import { subscriber, type NewsletterSubscriber } from "./newsletter.types";
 import { ZodErrors } from "../../shared/errors/zod-errors";
 import { ZodError } from "zod";
 import { escapeHtml } from "../../shared/utils/utils";
+import { PrismaErrors } from "../../shared/errors/prisma-errors";
 
 const sanitizeSubscriber = (validatedEntity: NewsletterSubscriber) => {
   return {
@@ -19,7 +20,7 @@ const sanitizeSubscriber = (validatedEntity: NewsletterSubscriber) => {
 export const create = async (req: Request, res: Response) => {
   try {
     const validatedSubscriber = subscriber.parse(req.body);
-    const sanitized = sanitizeSubscriber(validatedSubscriber)
+    const sanitized = sanitizeSubscriber(validatedSubscriber);
     const newSubscriber = await createNewsletterSubscriber(sanitized);
     res.status(201).json({
       message: "User successfully created",
@@ -29,7 +30,7 @@ export const create = async (req: Request, res: Response) => {
         surname: newSubscriber.surname,
       },
     });
-  } catch (err) {
+  } catch (err: any) {
     if (err instanceof ZodError) {
       throw ZodErrors.validation(err);
     }
@@ -39,6 +40,10 @@ export const create = async (req: Request, res: Response) => {
 };
 
 export const getAll = async (req: Request, res: Response) => {
-  const subscribers = await getAllNewsletterSubscribers();
-  res.status(200).json(subscribers);
+  try {
+    const subscribers = await getAllNewsletterSubscribers();
+    res.status(200).json(subscribers);
+  } catch (err: any) {
+    throw err;
+  }
 };

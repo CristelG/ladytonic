@@ -30,5 +30,6 @@ export const getAllNewsletterSubscribers = async () => {
     if (err?.code) {
       throw PrismaErrors.code(err);
     }
+    throw err;
   }
 };

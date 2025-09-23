@@ -8,4 +8,5 @@ export default {
   ...presetConfig,
   testEnvironment: 'node',
   injectGlobals: true,
+  setupFilesAfterEnv: ['<rootDir>/src/tests/setup.ts']
 }

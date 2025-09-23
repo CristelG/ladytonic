@@ -17,11 +17,13 @@ dotenv.config();
 const app: Application = express();
 
 //logging
-app.use(
-  morgan(
-    "[:date[web]] - METHOD:[:method] | URL:[:url] | HTTP-STATUS:[:status] | CONTENT-LENGTH:[:res[content-length]] | RESPONSE TIME (MS): [:response-time]"
-  )
-);
+if (process.env.NODE_ENV !== "test") {
+  app.use(
+    morgan(
+      "[:date[web]] - METHOD:[:method] | URL:[:url] | HTTP-STATUS:[:status] | CONTENT-LENGTH:[:res[content-length]] | RESPONSE TIME (MS): [:response-time]"
+    )
+  );
+}
 
 //json body parser
 app.use(express.json({ limit: "50kb" }));
@@ -97,6 +99,5 @@ const gracefulShutdown = async () => {
 
 process.on("SIGINT", gracefulShutdown);
 process.on("SIGTERM", gracefulShutdown);
-
 
 export default app;

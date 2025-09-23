@@ -14,7 +14,7 @@ export const getHealth = async (
     res.status(200).json(health);
   } catch (err) {
     //this is an exception to the error architecture in place, due to needing different formats of responses and error logging server side
-    console.error("Health check failed", err)
+    
     const elapsed = Date.now() - startTime;
     res.status(503).json({
       status: "unavailable",
@@ -24,5 +24,6 @@ export const getHealth = async (
       uptime: process.uptime(),
       timeElapsed: elapsed,
     });
+    console.error("Health check failed", err)
   }
 };

@@ -45,7 +45,7 @@ Object.defineProperty(originalPrisma.default, '$queryRaw', {
           .get('/api/health')
           .expect(503);
 
-        expect(response.body).toBe('Health check failed');
+        expect(response.body.status).toBe("unavailable");
       });
 
       it('should include all required health check fields', async () => {
